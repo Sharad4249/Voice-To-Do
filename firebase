@@ -1,0 +1,60 @@
+// Import Firebase modules
+const { initializeApp } = require("firebase/app");
+const { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc } = require("firebase/firestore");
+
+// Your Firebase config object (replace with your own config)
+const firebaseConfig = {
+  apiKey: "AIza....your_api_key....",
+  authDomain: "your-project.firebaseapp.com",
+  projectId: "your-project-id",
+  storageBucket: "your-project.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abc123"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// CREATE: Add a new user
+async function createUser() {
+  try {
+    const docRef = await addDoc(collection(db, "users"), {
+      name: "Alice",
+      email: "alice@example.com",
+      age: 28
+    });
+    console.log("User added with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
+
+// READ: Get all users
+async function getUsers() {
+  const querySnapshot = await getDocs(collection(db, "users"));
+  querySnapshot.forEach((doc) => {
+    console.log(`${doc.id} =>`, doc.data());
+  });
+}
+
+// UPDATE: Update user by ID
+async function updateUser(userId) {
+  const userRef = doc(db, "users", userId);
+  await updateDoc(userRef, {
+    age: 30
+  });
+  console.log("User updated");
+}
+
+// DELETE: Delete user by ID
+async function deleteUser(userId) {
+  await deleteDoc(doc(db, "users", userId));
+  console.log("User deleted");
+}
+
+// Run all functions as demo
+(async () => {
+  await createUser(); // then manually call updateUser and deleteUser with the ID from createUser
+  await getUsers();
+})();
