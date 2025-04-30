@@ -1,0 +1,109 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: SignUpScreen(),
+  ));
+}
+
+const kPurple = Color(0xFF6A4BBC);
+const kLightPurple = Color(0xFFF5EBFF);
+
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: kLightPurple,
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 80),
+                const Text(
+                  "Voice Todo",
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 40),
+                _buildInputField(Icons.email, "Email"),
+                const SizedBox(height: 20),
+                _buildInputField(Icons.lock, "Password", obscureText: true),
+                const SizedBox(height: 20),
+                _buildInputField(Icons.lock_outline, "Confirm Password", obscureText: true),
+                const SizedBox(height: 30),
+                _buildButton("Sign Up"),
+                const SizedBox(height: 20),
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to Login
+                  },
+                  child: const Text(
+                    "Already have an account? Login",
+                    style: TextStyle(
+                      color: kPurple,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 40),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInputField(IconData icon, String hint, {bool obscureText = false}) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 6,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: TextField(
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          prefixIcon: Icon(icon, color: kPurple),
+          hintText: hint,
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildButton(String text) {
+    return ElevatedButton(
+      onPressed: () {},
+      style: ElevatedButton.styleFrom(
+        backgroundColor: kPurple,
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        elevation: 6,
+        shadowColor: kPurple.withOpacity(0.4),
+      ),
+      child: Text(
+        text,
+        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+      ),
+    );
+  }
+}
